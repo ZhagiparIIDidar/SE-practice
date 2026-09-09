@@ -15,7 +15,7 @@ def app():
     for student in db:
         if not student.grades:
             print("Valid: 0\nyou dont have grades 😢")
-            break
+            continue
 
         profile: Profile = Profile(
             valid=len(student.grades),
@@ -29,8 +29,8 @@ def app():
 
 
 if __name__ == "__main__":
-    # try:
-    #     app()
-    # except Exception as e:
-    #     print(e)
-    app()
+    try:
+        app()
+    except Exception as e:
+        print(e)
+    # app()
