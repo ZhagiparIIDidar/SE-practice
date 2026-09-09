@@ -14,7 +14,7 @@ def app():
 
     for student in db:
         if not student.grades:
-            print("Valid: 0\nyou dont have grades 😢")
+            print(student)
             continue
 
         profile: Profile = Profile(
@@ -31,6 +31,7 @@ def app():
 if __name__ == "__main__":
     try:
         app()
+        print("goodbye 😘")
     except Exception as e:
         print(e)
     # app()
