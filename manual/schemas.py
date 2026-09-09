@@ -54,6 +54,8 @@ class Student:
         self.profile = profile
 
     def __repr__(self):
+        if not self.grades:
+            return f"Student: {self.name} dont have grades 😢, \n" f"valid = 0, \n"
         return (
             f"Student:\n"
             f"name = {self.name}, \n"
