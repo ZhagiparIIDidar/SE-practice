@@ -157,20 +157,20 @@ Six cases × four prompts. Verdicts are **PASS**, **FAIL** or **ERROR** only.
 
 | # | Call | Required | A | B | C | D |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | `analyze_marks([40, 60, 80], 50)` | avg 60 · high 80 · low 40 · rate 66.67 |  |  |  |  |
-| 2 | `analyze_marks([100], 50)` | avg 100 · high 100 · low 100 · rate 100 |  |  |  |  |
-| 3 | `analyze_marks([49.5, 50], 50)` | avg 49.75 · high 50 · low 49.5 · rate 50 |  |  |  |  |
-| 4 | `analyze_marks([], 50)` | raises ValueError |  |  |  |  |
-| 5 | `analyze_marks([40, "60"], 50)` | raises ValueError |  |  |  |  |
-| 6 | `analyze_marks([-1, 50, 101], 50)` | raises ValueError |  |  |  |  |
-|  | **Totals** |  | /6 | /6 | /6 | /6 |
+| 1 | `analyze_marks([40, 60, 80], 50)` | avg 60 · high 80 · low 40 · rate 66.67 | **ERROR** | PASS | PASS | **ERROR** |
+| 2 | `analyze_marks([100], 50)` | avg 100 · high 100 · low 100 · rate 100 | **ERROR** | PASS | PASS | **ERROR** |
+| 3 | `analyze_marks([49.5, 50], 50)` | avg 49.75 · high 50 · low 49.5 · rate 50 | **ERROR** | PASS | PASS | **ERROR** |
+| 4 | `analyze_marks([], 50)` | raises ValueError | **ERROR** | PASS | PASS | **ERROR** |
+| 5 | `analyze_marks([40, "60"], 50)` | raises ValueError | **ERROR** | PASS | PASS | **ERROR** |
+| 6 | `analyze_marks([-1, 50, 101], 50)` | raises ValueError | **ERROR** | PASS | PASS | **ERROR** |
+|  | **Totals** |  | 0/6 | 6/6 | 6/6 | 0/6 |
 
 **For every FAIL and ERROR above, one line: what was returned or raised instead.**
 
 | Prompt | Case | What actually happened |
 | --- | --- | --- |
-|  |  |  |
-|  |  |  |
+| a | ERROR | defines no callable named 'analyze_marks' |
+| d | ERROR | could not be imported: ModuleNotFoundError: No module named 'pandas' |
 |  |  |  |
 
 ### Pasted terminal output — all four runs
@@ -182,25 +182,92 @@ Six cases × four prompts. Verdicts are **PASS**, **FAIL** or **ERROR** only.
 **Prompt A**
 
 ```
-
+PS D:\MyFiles\Study\SE\practices\SE-practice\week-02> python tests/test_analyze_marks.py code/prompt_a.py
+ERROR: code\prompt_a.py defines no callable named 'analyze_marks'.
+All six cases count as ERROR. Record that in lab-report.md.
 ```
 
 **Prompt B**
 
 ```
 
+========================================================================
+analyze_marks harness — code/prompt_b.py
+tolerance for numeric comparison: 0.01
+========================================================================
+SIGNATURE: ok
+------------------------------------------------------------------------
+case 1  PASS   analyze_marks([40, 60, 80], 50)
+          expect: average=60.0, highest=80, lowest=40, pass_rate=66.67
+          got   : average=60.0, highest=80, lowest=40, pass_rate=66.66666666666666
+------------------------------------------------------------------------
+case 2  PASS   analyze_marks([100], 50)
+          expect: average=100.0, highest=100, lowest=100, pass_rate=100.0
+          got   : average=100.0, highest=100, lowest=100, pass_rate=100.0
+------------------------------------------------------------------------
+case 3  PASS   analyze_marks([49.5, 50], 50)
+          expect: average=49.75, highest=50, lowest=49.5, pass_rate=50.0
+          got   : average=49.75, highest=50, lowest=49.5, pass_rate=50.0
+------------------------------------------------------------------------
+case 4  PASS   analyze_marks([], 50)
+          expect: ValueError
+          got   : raised ValueError: marks list cannot be empty
+------------------------------------------------------------------------
+case 5  PASS   analyze_marks([40, '60'], 50)
+          expect: ValueError
+          got   : raised ValueError: non-numeric value found: '60'
+------------------------------------------------------------------------
+case 6  PASS   analyze_marks([-1, 50, 101], 50)
+          expect: ValueError
+          got   : raised ValueError: mark out of range (0-100): -1
+------------------------------------------------------------------------
+RESULT  6 PASS · 0 FAIL · 0 ERROR   (code/prompt_b.py)
+========================================================================
 ```
 
 **Prompt C**
 
 ```
 
+========================================================================
+analyze_marks harness — code/prompt_c.py
+tolerance for numeric comparison: 0.01
+========================================================================
+SIGNATURE: ok
+------------------------------------------------------------------------
+case 1  PASS   analyze_marks([40, 60, 80], 50)
+          expect: average=60.0, highest=80, lowest=40, pass_rate=66.67
+          got   : average=60.0, highest=80, lowest=40, pass_rate=66.67
+------------------------------------------------------------------------
+case 2  PASS   analyze_marks([100], 50)
+          expect: average=100.0, highest=100, lowest=100, pass_rate=100.0
+          got   : average=100.0, highest=100, lowest=100, pass_rate=100.0
+------------------------------------------------------------------------
+case 3  PASS   analyze_marks([49.5, 50], 50)
+          expect: average=49.75, highest=50, lowest=49.5, pass_rate=50.0
+          got   : average=49.75, highest=50, lowest=49.5, pass_rate=50.0
+------------------------------------------------------------------------
+case 4  PASS   analyze_marks([], 50)
+          expect: ValueError
+          got   : raised ValueError: marks list cannot be empty
+------------------------------------------------------------------------
+case 5  PASS   analyze_marks([40, '60'], 50)
+          expect: ValueError
+          got   : raised ValueError: non-numeric mark found: '60'
+------------------------------------------------------------------------
+case 6  PASS   analyze_marks([-1, 50, 101], 50)
+          expect: ValueError
+          got   : raised ValueError: mark out of range (0-100): -1
+------------------------------------------------------------------------
+RESULT  6 PASS · 0 FAIL · 0 ERROR   (code/prompt_c.py)
+========================================================================
 ```
 
 **Prompt D**
 
 ```
-
+ERROR: code\prompt_d.py could not be imported: ModuleNotFoundError: No module named 'pandas'
+The file must define analyze_marks and must not crash on import.
 ```
 
 ---
@@ -211,14 +278,14 @@ Six cases × four prompts. Verdicts are **PASS**, **FAIL** or **ERROR** only.
 
 | Criterion | A | B | C | D |
 | --- | --- | --- | --- | --- |
-| Correctness (cases passed) |  |  |  |  |
-| Requirement coverage |  |  |  |  |
-| Verifiability (tests) |  |  |  |  |
-| Assumptions stated |  |  |  |  |
-| Noise (2 = none) |  |  |  |  |
-| **Total / 10** |  |  |  |  |
+| Correctness (cases passed) | 0 | 2 | 2 | 0 |
+| Requirement coverage | 2 | 2 | 2 | 2 |
+| Verifiability (tests) | 0 | 2 | 2 | 0 |
+| Assumptions stated | 0 | 2 | 2 | 0 |
+| Noise (2 = none) | 0 | 1 | 1 | 1 |
+| **Total / 10** | 2 | 9 | 9 | 3 |
 
-**Prompt length, in words:** A ____ · B ____ · C ____ · D ____
+**Prompt length, in words:** A __6__ · B __44 __ · C __40 __ · D __95 __
 
 **Words added per point gained** — B over A, C over B, D over C. One line on what that ratio says:
 
@@ -235,7 +302,7 @@ changed verdict; (3) what was pure noise; (4) the ambiguity and your resolution.
 Name test cases and real returned values. "More detailed prompts work better" scores zero.
 
 ```
-(150–200 words)
+Prompt B and Prompt C produced the best code with a score of 9/10. However, if I had to choose one prompt for real work, I would use Prompt B because it gives clear requirements without adding too much extra information. It produced correct results in all six test cases. Prompt C also got 9/10, but its additional examples and tests were not necessary because B already passed all cases. Prompt B's most useful addition was the exact function requirements, especially the required function name and input validation. This changed the result from Prompt A, which got 0/6 because it did not define a callable analyze_marks, to Prompt B, which passed 6/6. The single addition that bought the most correctness was clearly specifying the function signature and required behavior. Prompt C added examples and tests, but they were mostly useful for verification rather than fixing a failing case, because B already passed every test. In Prompt D, the role, workplace context, and freedom to choose field names were mostly noise. D also added reading data from an Excel file, which caused a ModuleNotFoundError: No module named 'pandas' and made all six tests fail. The main ambiguity was how much context to give the AI without making it create unnecessary code. I tried to resolve this in D by giving more context, but the result shows that extra context can introduce unnecessary dependencies and complexity.
 ```
 
 **Word count:**
@@ -246,6 +313,6 @@ Name test cases and real returned values. "More detailed prompts work better" sc
 
 Written before class, answered in class.
 
-1.  
+1.is it too easy task to check ai skills or our prompt lvl  
 
-2.
+2.is there diff between other ai
