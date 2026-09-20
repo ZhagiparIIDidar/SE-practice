@@ -43,30 +43,32 @@ be checked:
 **Prompt sent** (should be exactly one sentence):
 
 ```
-
+Write Python code to analyze student marks.
 ```
 
 **Assumptions the AI made that I never gave it** — list them, one per line. A data format, a pass  
 
 threshold, a rounding rule, an input method, an invented feature all count.
 
-1.  
+1. ai wrote a Docstring  
 
-2.  
+2. ai wrote a sample data  
 
-3.
+3. ai set a min marks per subject itself and name of a python file is  Analyze student marks
 
 **Questions it should have asked and did not:**
 
-1.  
+1.what is the min marks per subject  
 
-2.
+2.do you need input in console or it works with
 
 **Is the function named `analyze_marks` with the required signature?** yes / no — if no, what is it  
 
-called:
+called: Analyze student marks
 
 **First impression before testing** (one sentence — you will compare this with section 6 later):
+
+ai wrote huge code that needs time to test, understand instead of little func
 
 ---
 
@@ -75,20 +77,23 @@ called:
 **Prompt sent** (paste it in full, including any substitutions):
 
 ```
-
+You are a Python developer. Implement analyze_marks(marks, pass_mark=50). Return
+average, highest, lowest, and pass_rate in a dictionary. Accept marks from 0 to 100;
+raise ValueError for an empty list, non-numeric values, or out-of-range values. Use
+no external libraries. Return code plus a short explanation.
 ```
 
 **What B fixed compared to A:**
 
-1.  
+1. code more less and friendly   
 
-2.
+2. used base python lvl
 
 **What B still leaves open:**
 
-1.  
+1.still have docstring that i didnt ask to do  
 
-2.
+2.ai decided to write the types at its discretion
 
 ---
 
