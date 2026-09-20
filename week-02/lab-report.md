@@ -102,21 +102,26 @@ no external libraries. Return code plus a short explanation.
 **What I appended to Prompt B:**
 
 ```
-
+Example: analyze_marks([40, 60, 80], 50) → average 60, highest 80, lowest 40,
+pass_rate 66.67. Include tests for: one mark, decimals, custom pass_mark, empty list,
+text value, and marks below 0 or above 100. State any remaining assumptions before
+the code.
 ```
 
 **Tests the AI wrote for itself** — how many, and which situations do they cover?
 
 | Situation | Covered by the AI's tests? |
 | --- | --- |
-| one mark |  |
-| decimals |  |
-| custom pass_mark |  |
-| empty list |  |
-| text value |  |
-| below 0 / above 100 |  |
+| one mark | y |
+| decimals | y |
+| custom pass_mark | y |
+| empty list | y |
+| text value | y |
+| below 0 / above 100 | y |
 
 **Do the AI's own tests pass against the AI's own code?** yes / no
+
+yes
 
 **Do they agree with the harness in section 6?** yes / no — if no, where do they disagree:
 
@@ -129,18 +134,20 @@ no external libraries. Return code plus a short explanation.
 **The complete prompt I wrote** (one message, sent to a fresh chat):
 
 ```
-
+your seniour python developer on dome school, write on python func analysis_marks, func, it should return dict(average, highest, lowest, pass_rate), empty list, non-numeric values, range 0-100, return bool results as string at the end like 'true' 'false' + contects , reads data from exel file, name of fields you can set yourself
 ```
 
 **What I deliberately added that A, B and C did not have:**
 
-1.  
+1. where data comes  
 
-2.  
+2. role + work place  
 
-3.
+3. some freedom
 
 **The ambiguity I found in the specification, and how I resolved it inside Prompt D:**
+
+**if you give a role ai changes his code, it write a lot, so i gave him more context**
 
 ---
 
