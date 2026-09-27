@@ -137,7 +137,7 @@ UC3 ..> UC6 : <<include>>
 
 Rendered diagram (image, or a link):
 
-![]()
+![]()https://plantuml.online/uml/TP3FJiCm3CRlVWghzqrYtNP0KoNe6wo2kvjcnLh-eCGTgX3lJbfo81FabC_VprzY6tqH58-1npV1WODMmju1a18Vi9Dfq4woUXeiEuuIA2c0XIKt6erLPoa8jcJVfxWspNZstkApzrTs8tPp56qh_0HCPufQKKnjhwm_a6x4XdesB7E55F6bVIYn9GL3oilshhHRSaeRx7_Uoanz5s6ykcAQONBzUlqLjo_HixujtveYZJeJXvBej1jGUNVXO6bPLyQEy0MGLuQRJRDEKkhTdQu1YgtcylxFwW4W9U1skuWZFkBfn4wPbDSqoQd_SRu1
 
 ---
 
@@ -246,11 +246,9 @@ Commit these numbers were produced at (`git rev-parse --short HEAD`): f5693e8
 - **checker.fail:** The checker result was not recorded. **Decision:** fill in `1` after running the checker.
 - **checker.error:** The checker error count was not recorded. **Decision:** fill in `0` after running the checker.
 - **checker.commit:** The commit hash was not recorded. **Decision:** fill in `f5693e8`.
-- **review_findings:** Fewer than three review findings were recorded. **Decision:** add at least three findings from the requirements review.
-**Did you run the checks by hand instead of with Python?**  
-No. I ran both checks with Python using `check_requirements.py` and `validate_submission.py`.
-
----
+- **review_findings:** Fewer than three review findings were recorded. **Decision:** add at least three findings from the requirements review.  
+**Did you run the checks by hand instead of with Python?**
+## No. I ran both checks with Python using `check_requirements.py` and `validate_submission.py`.
 
 ## 10. Conclusion (150–200 words)
 
