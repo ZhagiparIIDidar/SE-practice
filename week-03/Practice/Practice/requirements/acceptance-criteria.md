@@ -1,73 +1,1 @@
-# Acceptance criteria — three selected stories
-
-Assumptions first, then the criteria. Each block names the story it belongs to. 3 to 5 criteria per
-story, every one in Given / When / Then form, and every set covers a validation or error case — not
-three happy paths.
-
----
-
-## Assumptions
-
-These must settle the two questions the scenario leaves open. Either answer is accepted; no answer
-is not.
-
-- **Overlap:** a booking that ends exactly when another begins is TODO (allowed / not allowed) under R3, because TODO.
-- **Duration:** a booking of exactly two hours is TODO (allowed / not allowed) under R2, because TODO.
-- TODO (any further assumption you needed)
-
----
-
-## US-TODO — <story title>
-
-### AC-01
-- **Given** TODO
-- **When** TODO
-- **Then** TODO
-
-### AC-02
-- **Given** TODO
-- **When** TODO
-- **Then** TODO
-
-### AC-03
-- **Given** TODO
-- **When** TODO
-- **Then** TODO
-
----
-
-## US-TODO — <story title>
-
-### AC-04
-- **Given** TODO
-- **When** TODO
-- **Then** TODO
-
-### AC-05
-- **Given** TODO
-- **When** TODO
-- **Then** TODO
-
-### AC-06
-- **Given** TODO
-- **When** TODO
-- **Then** TODO
-
----
-
-## US-TODO — <story title>
-
-### AC-07
-- **Given** TODO
-- **When** TODO
-- **Then** TODO
-
-### AC-08
-- **Given** TODO
-- **When** TODO
-- **Then** TODO
-
-### AC-09
-- **Given** TODO
-- **When** TODO
-- **Then** TODO
+# Acceptance criteria — three selected storiesAssumptions first, then the criteria. Each block names the story it belongs to. 3 to 5 criteria perstory, every one in Given / When / Then form, and every set covers a validation or error case — notthree happy paths.---## Assumptions* **Overlap:** a booking that ends exactly when another begins is **allowed** under R3, because the two bookings do not overlap.* **Duration:** a booking of exactly two hours is **allowed** under R2, because two hours is the maximum permitted duration.* **Future bookings:** a booking must start in the future.---## US-01 — View study room availability### AC-01* **Given** a study room is free during a future time slot* **When** the Student views room availability* **Then** the room is shown as available for that time slot### AC-02* **Given** a study room is already booked during the requested time* **When** the Student views room availability* **Then** the room is not shown as available for the overlapping time### AC-03* **Given** a study room is blocked* **When** the Student views room availability* **Then** the blocked room is not shown as available---## US-02 — Book a study room### AC-04* **Given** a study room is available and the requested start time is in the future* **When** the Student books the room for a duration of two hours or less* **Then** the booking is created successfully### AC-05* **Given** a study room is available* **When** the Student attempts to book it for more than two hours* **Then** the system rejects the booking and indicates that the maximum duration is two hours### AC-06* **Given** a study room already has a booking that overlaps the requested time* **When** the Student attempts to book the room* **Then** the system rejects the booking---## US-03 — Cancel a study room booking### AC-07* **Given** the Student has an active booking that they made* **When** the Student cancels the booking* **Then** the booking is cancelled successfully### AC-08* **Given** the Student does not own the selected booking* **When** the Student attempts to cancel it* **Then** the system rejects the cancellation### AC-09* **Given** the Student has already cancelled the selected booking* **When** the Student attempts to cancel it again* **Then** the system rejects the request and indicates that the booking is no longer active

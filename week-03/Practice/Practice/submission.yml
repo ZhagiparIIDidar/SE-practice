@@ -14,15 +14,15 @@ week: "03"
 
 student:
   name:
-  student_id:          # as in KBTU records, e.g. 24B031016
-  github:              # your GitHub username, the one that owns the repo
+  student_id: 24B031016          # as in KBTU records, e.g. 24B031016
+  github: ZhagiparIIDidar              # your GitHub username, the one that owns the repo
 
 assistant:
-  tool:                # e.g. ChatGPT, Claude, Gemini, Copilot
-  model:               # the exact model name with its version. "ChatGPT" is not a model name.
+  tool: ChatGPT               # e.g. ChatGPT, Claude, Gemini, Copilot
+  model: GPT-5.6 Luna              # the exact model name with its version. "ChatGPT" is not a model name.
 
 counts:
-  user_stories:            # how many stories you kept after your review (the task asks for 6-8)
+  user_stories: 6           # how many stories you kept after your review (the task asks for 6-8)
   acceptance_criteria_sets: 3   # how many stories you wrote Given/When/Then criteria for
 
 checker:
@@ -38,8 +38,8 @@ checker:
 assumptions:
   # The scenario does not settle these two. Decide, declare, and defend the decision in lab-report.md.
   # Either answer is acceptable. Not deciding is not.
-  overlap_touching_bookings:   # allowed | not-allowed   (a booking ending 14:00 and one starting 14:00)
-  exactly_two_hours:           # allowed | not-allowed   (a booking of exactly the maximum length)
+  overlap_touching_bookings: allowed   # allowed | not-allowed   (a booking ending 14:00 and one starting 14:00)
+  exactly_two_hours: allowed           # allowed | not-allowed   (a booking of exactly the maximum length)
 
 traceability:
   # Use the IDs from requirements/traceability.md. Empty lists are allowed — if you claim full
@@ -56,5 +56,5 @@ review_findings:
   -
 
 honesty:
-  can_explain_everything_submitted:   # yes | no   — "no" is an accepted answer, name the part in lab-report.md
-  ai_usage_disclosed:                 # yes | no   — AI_USAGE.md is required every week
+  can_explain_everything_submitted: yes  # yes | no   — "no" is an accepted answer, name the part in lab-report.md
+  ai_usage_disclosed: yes                # yes | no   — AI_USAGE.md is required every week

@@ -1,12 +1,12 @@
 # Lab report — Practice #03, Requirements Engineering with AI
 
-Fill in every section. **Do not delete or renumber the headings** — the README points at them and a  
+Fill in every section. **Do not delete or renumber the headings** — the README points at them and a
 
 missing heading reads as a missing section.
 
-Name:  
+Name:
 
-Student ID:  
+Student ID:
 
 GitHub username:
 
@@ -21,7 +21,7 @@ GitHub username:
 | Date of the session | 27 September 2026 |
 | Diagram renderer used | Mermaid |
 
-One tool and one model for all three prompts. If you switched, say why here — it changes what your  
+One tool and one model for all three prompts. If you switched, say why here — it changes what your
 
 findings mean.
 
@@ -29,7 +29,7 @@ findings mean.
 
 ## 2. Original AI output — user stories (Part 1)
 
-Paste the **unedited** response to Prompt 1. Do not tidy it. If it is long, paste all of it anyway;  
+Paste the **unedited** response to Prompt 1. Do not tidy it. If it is long, paste all of it anyway;
 
 this is the baseline everything else is measured against.
 
@@ -58,9 +58,7 @@ One row per change you made. "Kept unchanged" is a valid row and needs a reason 
 | US-07: Block or unblock a study room | Kept unchanged | It directly matches UC-04 and the Administrator role. | US-07 |
 | US-08: Review room usage | Kept unchanged | It directly matches UC-05 and the Administrator role. | US-08 |
 
-
-
-**Did the assistant invent anything outside the scenario?** Name it against the out-of-scope list in  
+**Did the assistant invent anything outside the scenario?** Name it against the out-of-scope list in
 
 README section 1, or write "no, and here is how I checked".
 
@@ -75,7 +73,7 @@ I ended with **8 stories** because the scenario asks for 6 to 8 stories, and 8 a
 ## 4. Original AI output — acceptance criteria (Part 3)
 
 ```
-(paste here)
+Here are the assumptions first, followed by 3–5 acceptance criteria for each selected story.US-01Assumptions:A blocked room is not shown as available.Availability is checked for the requested future time period.Acceptance Criteria:Given a study room is free during a future time slot, When the Student views availability, Then the room is shown as available for that time slot.Given a study room is already booked during a time slot, When the Student views availability, Then the room is not shown as available for that overlapping time.Given a room is blocked, When the Student views availability, Then the blocked room is not shown as available.Given a requested time slot is in the past, When the Student checks availability for that slot, Then the system does not allow the Student to use that past slot for a booking.US-02Assumptions:A booking can last up to two hours.A booking must start in the future.A booking ending exactly when another begins does not overlap.Acceptance Criteria:Given a room is available and the requested start time is in the future, When the Student books it for a duration of two hours or less, Then the booking is created successfully.Given a Student attempts to book a room for more than two hours, When the Student submits the booking, Then the system rejects the booking and indicates that the maximum duration is two hours.Given a Student attempts to create a booking with a start time in the past, When the Student submits the booking, Then the system rejects the booking.Given a room already has a booking that overlaps the requested time, When the Student attempts to book that room, Then the system rejects the booking.Given an existing booking ends at 12:00 and a new booking starts at 12:00, When the Student books the room, Then the new booking is allowed because the two bookings do not overlap.US-03Assumptions:A Student can cancel only a booking they made.A booking must have been created for a future time to be eligible for cancellation.Acceptance Criteria:Given a Student has a booking they made, When they choose to cancel it, Then the booking is cancelled and the room becomes available for that time.Given a Student does not own a booking, When they attempt to cancel it, Then the system rejects the cancellation.Given a Student selects a booking that has already been cancelled, When they attempt to cancel it again, Then the system rejects the request and indicates that the booking is no longer active.Given a Student has an active future booking, When they cancel it successfully, Then the cancelled booking no longer prevents another Student from booking that time slot.
 ```
 
 ---
@@ -84,18 +82,26 @@ I ended with **8 stories** because the scenario asks for 6 to 8 stories, and 8 a
 
 | Criterion (as generated) | Problem | What I changed it to | Final ID |
 | --- | --- | --- | --- |
-|  |  |  |  |
+| A free room is shown as available for a future time slot. | No problem. | Kept unchanged. | AC-01 |
+| A room with an overlapping booking is not shown as available. | No problem. | Kept unchanged. | AC-02 |
+| A blocked room is not shown as available. | No problem. | Kept unchanged. | AC-03 |
+| A Student can book an available room for up to two hours. | The maximum duration needed to be explicit. | Clarified that the duration can be two hours or less. | AC-04 |
+| A booking longer than two hours is rejected. | No problem. | Kept unchanged. | AC-05 |
+| An overlapping booking is rejected. | No problem. | Kept unchanged. | AC-06 |
+| A Student can cancel their own active booking. | No problem. | Kept unchanged. | AC-07 |
+| A Student cannot cancel another Student's booking. | No problem. | Kept unchanged. | AC-08 |
+| A Student cannot cancel an already cancelled booking. | No problem. | Kept unchanged. | AC-09 |
 
-**The two open questions.** Write your decision and the reason. Either answer is accepted.
+**The two open questions.**
 
 | Question | My decision | Why |
 | --- | --- | --- |
-| A booking ending exactly when another begins — overlap under R3? | allowed / not-allowed |  |
-| Is exactly two hours allowed under R2? | allowed / not-allowed |  |
+| A booking ending exactly when another begins — overlap under R3? | allowed | The two bookings do not overlap because one ends exactly when the other begins. |
+| Is exactly two hours allowed under R2? | allowed | Two hours is the maximum duration, so a booking of exactly two hours is valid. |
 
 **Which invalid or boundary case did the assistant leave out?**
 
----
+The assistant left out the case where the booking has an invalid duration, such as an end time that is the same as or earlier than the start time.
 
 ## 6. Original AI output — use-case diagram (Part 4)
 
@@ -113,7 +119,7 @@ Rendered diagram (image, or a link):
 | --- | --- | --- |
 |  |  |  |
 
-**Associations.** Which actor–use-case links did the assistant draw that a person does not actually  
+**Associations.** Which actor–use-case links did the assistant draw that a person does not actually
 
 trigger? Name them.
 
@@ -127,9 +133,8 @@ Summarise what the table in `requirements/traceability.md` shows:
 
 - Use cases with **no story** behind them:
 - Stories with **no use case** they belong to:
-- Criteria that test **no rule** from section 1:
+- Criteria that test **no rule** from section 1:  
 **What does the largest gap tell you about the generated requirements?**
-
 ---
 
 ## 9. Checker runs
@@ -152,11 +157,11 @@ $ python tests/validate_submission.py
 
 Commit these numbers were produced at (`git rev-parse --short HEAD`):
 
-**Every FAIL, one line each: what it is and what you decided to do about it.** A FAIL you report and  
+**Every FAIL, one line each: what it is and what you decided to do about it.** A FAIL you report and
 
 explain costs you nothing.
 
-**Did you run the checks by hand instead of with Python?** Say so here — it costs nothing, but it  
+**Did you run the checks by hand instead of with Python?** Say so here — it costs nothing, but it
 
 has to be said.
 
@@ -166,13 +171,15 @@ has to be said.
 
 Answer all three:
 
-1. Which part of the generated requirements was most wrong, and how would you have caught it without  
+1. Which part of the generated requirements was most wrong, and how would you have caught it without
+a checker?  
 
-a checker?
-2. What did the assistant get right that would have taken you noticeably longer by hand?
-3. You are handing these requirements to someone who will implement them, and you will not be in the  
+2. What did the assistant get right that would have taken you noticeably longer by hand?  
 
-room. Which single one would you rewrite first, and why?
-Be specific. "The AI was useful" is worth nothing; "UC-06 had no story behind it until I wrote  
+3. You are handing these requirements to someone who will implement them, and you will not be in the
+
+room. Which single one would you rewrite first, and why?  
+
+Be specific. "The AI was useful" is worth nothing; "UC-06 had no story behind it until I wrote
 
 US-07, and the checker is what told me" is worth everything.
