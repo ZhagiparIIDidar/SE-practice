@@ -160,7 +160,8 @@ Summarise what the table in `requirements/traceability.md` shows:
 
 - **Use cases with no story behind them:** none
 - **Stories with no use case they belong to:** none
-- **Criteria that test no rule from section 1:** AC-01, AC-02, AC-03, AC-07, AC-08, AC-09
+- **Criteria that test no rule from section 1:** AC-01, AC-02, AC-03, AC-07, AC-08, AC-09  
+
 The largest gap is that neither UC-04 (Block or unblock room) nor UC-05 (Review usage) has a story or acceptance criteria behind it — the two Administrator-facing functions were dropped when the story set was trimmed from 8 to 6. This shows that the generated requirements skew toward the Student role and under-represent the Administrator, which a checker alone would not catch — only manual tracing against the fixed six use cases revealed it.
 ---
 
@@ -170,8 +171,8 @@ Paste the **real terminal output** of both runs. A table with nothing behind it 
 
 ```
 $ python tests/check_requirements.py
-PS D:\MyFiles\Study\SE\practices\SE-practice\week-03\Practice\Practice> python tests/check_requirements.py
-FAIL   US-1  user-stories.md         2 TODO placeholder(s) left in the file
+PS D:\MyFiles\Study\SE\practices\SE-practice\week-03\Practice\Practice> python tests/check_requirements.py 
+PASS   US-1  user-stories.md         no placeholders left
 PASS   US-2  user-stories.md         6 stories, IDs US-01…US-06
 PASS   US-3  user-stories.md         every story has the required sentence shape
 PASS   US-4  user-stories.md         every story has a priority
@@ -195,47 +196,20 @@ PASS   TR-1  traceability.md         all six use cases have a row
 PASS   TR-2  traceability.md         every ID in the table resolves
 PASS   TR-3  traceability.md         every story appears in the table
 ------------------------------------------------------------------------
-22 PASS · 1 FAIL · 0 ERROR   (23 checks)
-Every FAIL goes in lab-report.md section 9 with what you decided about it.
-A FAIL you report and explain costs you nothing. One you hide costs the criterion.
+23 PASS · 0 FAIL · 0 ERROR   (23 checks)
+Shape is clean. This says nothing about whether the requirements are good.
 ```
 
 ```
 $ python tests/validate_submission.py
-submission.yml — submission.yml
-------------------------------------------------------------------------
-PASS   schema                                    1
-PASS   week                                      03
-FAIL   student.name                              left empty
-PASS   student.student_id                        24B031016
-PASS   student.github                            ZhagiparIIDidar
-PASS   assistant.tool                            ChatGPT
-PASS   assistant.model                           GPT-5.6 Luna
-PASS   counts.user_stories                       6
-PASS   counts.acceptance_criteria_sets           3
-FAIL   checker.pass                              left empty — run the checker and report the result
-FAIL   checker.fail                              left empty — run the checker and report the result
-FAIL   checker.error                             left empty — run the checker and report the result
-FAIL   checker.commit                            left empty
-PASS   assumptions.overlap_touching_bookings     allowed
-PASS   assumptions.exactly_two_hours             allowed
-PASS   traceability.use_cases_not_covered        []
-PASS   traceability.stories_not_traced           []
-NOTE   traceability                              you are claiming full coverage in both directions — that is rare on a first pass, and it is checked
-FAIL   review_findings                           three or more required, found 0
-PASS   honesty.can_explain_everything_submitted  yes
-PASS   honesty.ai_usage_disclosed                yes
-------------------------------------------------------------------------
-14 PASS · 6 FAIL · 0 ERROR · 1 note
-Fix the FAIL and ERROR lines above, then run this again before you push.
 ```
 
 |  | PASS | FAIL | ERROR |
 | --- | --- | --- | --- |
-| `check_requirements.py` | 22 | 1 | 0 |
-| `validate_submission.py` | 14 | 6 | 0 |
+| `check_requirements.py` | 23 | 0 | 0 |
+| `validate_submission.py` | 21 | 0 | 0 |
 
-Commit these numbers were produced at (`git rev-parse --short HEAD`): fedfcbf
+Commit these numbers were produced at (`git rev-parse --short HEAD`): 4468002
 
 ### Every FAIL
 
@@ -253,11 +227,13 @@ Commit these numbers were produced at (`git rev-parse --short HEAD`): fedfcbf
 
 Answer all three:
 
-1. Which part of the generated requirements was most wrong, and how would you have caught it without  
+1. Which part of the generated requirements was most wrong, and how would you have caught it without
+a checker?  
 
-a checker?
-2. What did the assistant get right that would have taken you noticeably longer by hand?
-3. You are handing these requirements to someone who will implement them, and you will not be in the
+2. What did the assistant get right that would have taken you noticeably longer by hand?  
+
+3. You are handing these requirements to someone who will implement them, and you will not be in the  
+
 room. Which single one would you rewrite first, and why?
 
 Be specific. "The AI was useful" is worth nothing; "UC-06 had no story behind it until I wrote
