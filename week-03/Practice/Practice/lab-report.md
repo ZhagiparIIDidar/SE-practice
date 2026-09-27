@@ -55,8 +55,6 @@ One row per change you made. "Kept unchanged" is a valid row and needs a reason 
 | US-04: Cancel a booking | Kept unchanged | It directly matches UC-03 and allows a Student to release a reservation they made. | US-04 |
 | US-05: Receive booking confirmation | Kept unchanged | It directly matches UC-06 for confirmation of a booking. | US-05 |
 | US-06: Receive cancellation confirmation | Kept unchanged | It directly matches UC-06 for confirmation of a cancellation. | US-06 |
-| US-07: Block or unblock a study room | Kept unchanged | It directly matches UC-04 and the Administrator role. | US-07 |
-| US-08: Review room usage | Kept unchanged | It directly matches UC-05 and the Administrator role. | US-08 |
 
 **Did the assistant invent anything outside the scenario?** Name it against the out-of-scope list in
 
@@ -66,7 +64,7 @@ No. I checked each story against the out-of-scope list: no payments, fees, fines
 
 **How many stories did you end with, and why that number?**
 
-I ended with **8 stories** because the scenario asks for 6 to 8 stories, and 8 allows all six use cases to be covered while separating the important Student goals and the two confirmation cases.****
+I ended with 6**stories** because the scenario asks for 6 to 8 stories, and 6 allows all six use cases to be covered while separating the important Student goals and the two confirmation cases.
 
 ---
 
@@ -163,6 +161,7 @@ Summarise what the table in `requirements/traceability.md` shows:
 - **Use cases with no story behind them:** none
 - **Stories with no use case they belong to:** none
 - **Criteria that test no rule from section 1:** AC-01, AC-02, AC-03, AC-07, AC-08, AC-09
+The largest gap is that neither UC-04 (Block or unblock room) nor UC-05 (Review usage) has a story or acceptance criteria behind it — the two Administrator-facing functions were dropped when the story set was trimmed from 8 to 6. This shows that the generated requirements skew toward the Student role and under-represent the Administrator, which a checker alone would not catch — only manual tracing against the fixed six use cases revealed it.
 ---
 
 ## 9. Checker runs
@@ -236,33 +235,37 @@ Fix the FAIL and ERROR lines above, then run this again before you push.
 | `check_requirements.py` | 22 | 1 | 0 |
 | `validate_submission.py` | 14 | 6 | 0 |
 
-Commit these numbers were produced at (`git rev-parse --short HEAD`): f5693e8
+Commit these numbers were produced at (`git rev-parse --short HEAD`): fedfcbf
 
 ### Every FAIL
 
-- **US-1:**`user-stories.md` has 2 TODO placeholders left. **Decision:** remove the remaining TODO placeholders before the final submission.
-- **student.name:** The student name is empty in `submission.yml`. **Decision:** fill in my name before the final submission.
-- **checker.pass:** The checker result was not recorded. **Decision:** fill in `22` after running the checker.
-- **checker.fail:** The checker result was not recorded. **Decision:** fill in `1` after running the checker.
-- **checker.error:** The checker error count was not recorded. **Decision:** fill in `0` after running the checker.
-- **checker.commit:** The commit hash was not recorded. **Decision:** fill in `f5693e8`.
-- **review_findings:** Fewer than three review findings were recorded. **Decision:** add at least three findings from the requirements review.  
-**Did you run the checks by hand instead of with Python?**
+- **US-1:**`user-stories.md` has 2 TODO placeholders left. **Decision:** removed the remaining TODO placeholders before the final submission.
+- **student.name:** The student name is empty in `submission.yml`. **Decision:** filled in my name before the final submission.
+- **checker.pass:** The checker result was not recorded. **Decision:** filled in `22` after running the checker.
+- **checker.fail:** The checker result was not recorded. **Decision:** filled in `1` after running the checker.
+- **checker.error:** The checker error count was not recorded. **Decision:** filled in `0` after running the checker.
+- **checker.commit:** The commit hash was not recorded. **Decision:** filled in `fedfcbf`.
+- review_findings: was initially empty; added three findings: (1) US-04 had no story behind it in the selected AC set [UC-04 без критериев], (2) the diagram initially risked linking Send confirmation directly to an actor but was kept as an `<<include>>` use case since no person triggers it directly, (3) UC-04 had a story but no acceptance criteria.
+- **Did you run the checks by hand instead of with Python?**
 ## No. I ran both checks with Python using `check_requirements.py` and `validate_submission.py`.
 
 ## 10. Conclusion (150–200 words)
 
 Answer all three:
 
-1. Which part of the generated requirements was most wrong, and how would you have caught it without
-a checker?  
+1. Which part of the generated requirements was most wrong, and how would you have caught it without  
 
-2. What did the assistant get right that would have taken you noticeably longer by hand?  
-
-3. You are handing these requirements to someone who will implement them, and you will not be in the  
-
+a checker?
+2. What did the assistant get right that would have taken you noticeably longer by hand?
+3. You are handing these requirements to someone who will implement them, and you will not be in the
 room. Which single one would you rewrite first, and why?
 
 Be specific. "The AI was useful" is worth nothing; "UC-06 had no story behind it until I wrote
 
 US-07, and the checker is what told me" is worth everything.
+
+The most wrong part of the generated requirements was the incomplete coverage between use cases and acceptance criteria. UC-04, UC-05, and UC-06 each had a corresponding user story, but the selected acceptance criteria covered only US-01, US-02, and US-03. I could have caught this without a checker by manually tracing every use case through the stories and then checking whether each story had testable acceptance criteria.
+
+The assistant got several things right that would have taken me noticeably longer by hand. It produced six complete user stories with consistent IDs, priorities, assumptions, and the required “As a / I want / so that” structure. It also generated nine Given/When/Then criteria and included boundary or error cases such as AC-05, where a booking longer than two hours is rejected, and AC-06, where overlapping bookings are rejected.
+
+If I were handing these requirements to an implementer, I would rewrite US-06 first. It says that a Student should receive confirmation when a booking or cancellation is completed, but it does not specify how or when that confirmation is delivered. This could leave the implementation ambiguous. I would clarify the expected confirmation behaviour before development begins.

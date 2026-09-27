@@ -13,7 +13,7 @@ schema: 1
 week: "03"
 
 student:
-  name:
+  name: Жағыпар Дидар Қанатұлы
   student_id: 24B031016          # as in KBTU records, e.g. 24B031016
   github: ZhagiparIIDidar              # your GitHub username, the one that owns the repo
 
@@ -45,14 +45,14 @@ traceability:
   # Use the IDs from requirements/traceability.md. Empty lists are allowed — if you claim full
   # coverage, the checker and I will test that claim.
   use_cases_not_covered: [UC-04, UC-05, UC-06]    # e.g. [UC-05, UC-06]
-  stories_not_traced: [UC-01, UC-02, UC-03]       # e.g. [US-09]
+  stories_not_traced: []       # e.g. [US-09]
 
 review_findings:
   # Three or more. One line each, and each one names the ID it is about.
   # Worthless: "the AI made mistakes".
   # Worth everything: "UC-06 Send confirmation had no story behind it until I wrote US-07".
   - "US-04 originally required an administrator to block or unblock a study room, but it had no acceptance criteria in the selected criteria set."
-  - "AC-05 checks the boundary that a booking longer than two hours must be rejected, covering the maximum-duration rule."
+  - "Diagram initially could have linked Send confirmation directly to an actor; kept it as <<include>> since no person triggers it directly (UC-06)."
   - "UC-04 had a story (US-04) but no acceptance criteria, showing a gap in criteria coverage for the use-case diagram."
 
 honesty:
