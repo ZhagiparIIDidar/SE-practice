@@ -1,40 +1,1 @@
-# User stories — Smart Campus study room booking
-
-6 to 8 stories. Keep the shape exactly: ID, the As/I want/so that sentence, a priority, one
-assumption. Roles are **Student** or **Administrator** only.
-
-Delete the TODO lines as you fill them in — the checker treats a leftover TODO as unfinished work.
-
----
-
-### US-01
-**Story:** As a TODO, I want TODO, so that TODO.
-**Priority:** High / Medium / Low
-**Assumption:** TODO
-
-### US-02
-**Story:** As a TODO, I want TODO, so that TODO.
-**Priority:**
-**Assumption:** TODO
-
-### US-03
-**Story:** As a TODO, I want TODO, so that TODO.
-**Priority:**
-**Assumption:** TODO
-
-### US-04
-**Story:** As a TODO, I want TODO, so that TODO.
-**Priority:**
-**Assumption:** TODO
-
-### US-05
-**Story:** As a TODO, I want TODO, so that TODO.
-**Priority:**
-**Assumption:** TODO
-
-### US-06
-**Story:** As a TODO, I want TODO, so that TODO.
-**Priority:**
-**Assumption:** TODO
-
-<!-- Add two more blocks in the same shape if you kept 7 or 8 stories. -->
+# User stories — Smart Campus study room booking6 to 8 stories. Keep the shape exactly: ID, the As/I want/so that sentence, a priority, oneassumption. Roles are **Student** or **Administrator** only.Delete the TODO lines as you fill them in — the checker treats a leftover TODO as unfinished work.---### US-01**Story:** As a Student, I want to view which study rooms are free and when, so that I can choose an available room and time.**Priority:** High**Assumption:** A blocked room is not shown as available.### US-02**Story:** As a Student, I want to book a free study room for a time slot, so that I can use the room for individual or group study.**Priority:** High**Assumption:** A booking may last exactly two hours, and a booking ending exactly when another begins does not overlap.### US-03**Story:** As a Student, I want to cancel a booking I made, so that I can release the reservation when I no longer need the room.**Priority:** High**Assumption:** A Student can cancel only a booking they made.### US-04**Story:** As an Administrator, I want to block or unblock a study room, so that I can take a room out of service or put it back into service.**Priority:** High**Assumption:** A blocked room cannot be booked.### US-05**Story:** As an Administrator, I want to review how study rooms are being used over a period, so that I can monitor room usage.**Priority:** Medium**Assumption:** The review covers room usage during a specified period.### US-06**Story:** As a Student, I want to receive confirmation when my booking or cancellation is completed, so that I know the action was successfully processed.**Priority:** Medium**Assumption:** Confirmation is provided only for completed bookings or cancellations.
