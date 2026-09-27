@@ -171,27 +171,84 @@ Paste the **real terminal output** of both runs. A table with nothing behind it 
 
 ```
 $ python tests/check_requirements.py
-(paste)
+PS D:\MyFiles\Study\SE\practices\SE-practice\week-03\Practice\Practice> python tests/check_requirements.py
+FAIL   US-1  user-stories.md         2 TODO placeholder(s) left in the file
+PASS   US-2  user-stories.md         6 stories, IDs US-01…US-06
+PASS   US-3  user-stories.md         every story has the required sentence shape
+PASS   US-4  user-stories.md         every story has a priority
+PASS   US-5  user-stories.md         every story declares an assumption
+PASS   US-6  user-stories.md         only Student and Administrator appear as roles
+PASS   US-7  user-stories.md         nothing from the out-of-scope list appears
+PASS   AC-1  acceptance-criteria.md  no placeholders left
+PASS   AC-2  acceptance-criteria.md  three sections, all naming real stories: US-01, US-02, US-03
+PASS   AC-3  acceptance-criteria.md  every section has 3 to 5 uniquely numbered criteria
+PASS   AC-4  acceptance-criteria.md  all 9 criteria are complete Given/When/Then
+PASS   AC-5  acceptance-criteria.md  every section covers an invalid or boundary case
+PASS   AC-6  acceptance-criteria.md  3 assumptions listed before the criteria
+PASS   AC-7  acceptance-criteria.md  both open questions are settled in the assumptions
+PASS   PU-1  use-cases.puml          valid PlantUML block, no placeholders
+PASS   PU-2  use-cases.puml          exactly two actors: Student, Administrator
+PASS   PU-3  use-cases.puml          all six use cases present
+PASS   PU-4  use-cases.puml          system boundary present
+PASS   PU-5  use-cases.puml          no screens, databases or internal components
+PASS   PU-6  use-cases.puml          no unjustified actor associations found
+PASS   TR-1  traceability.md         all six use cases have a row
+PASS   TR-2  traceability.md         every ID in the table resolves
+PASS   TR-3  traceability.md         every story appears in the table
+------------------------------------------------------------------------
+22 PASS · 1 FAIL · 0 ERROR   (23 checks)
+Every FAIL goes in lab-report.md section 9 with what you decided about it.
+A FAIL you report and explain costs you nothing. One you hide costs the criterion.
 ```
 
 ```
 $ python tests/validate_submission.py
-(paste)
+submission.yml — submission.yml
+------------------------------------------------------------------------
+PASS   schema                                    1
+PASS   week                                      03
+FAIL   student.name                              left empty
+PASS   student.student_id                        24B031016
+PASS   student.github                            ZhagiparIIDidar
+PASS   assistant.tool                            ChatGPT
+PASS   assistant.model                           GPT-5.6 Luna
+PASS   counts.user_stories                       6
+PASS   counts.acceptance_criteria_sets           3
+FAIL   checker.pass                              left empty — run the checker and report the result
+FAIL   checker.fail                              left empty — run the checker and report the result
+FAIL   checker.error                             left empty — run the checker and report the result
+FAIL   checker.commit                            left empty
+PASS   assumptions.overlap_touching_bookings     allowed
+PASS   assumptions.exactly_two_hours             allowed
+PASS   traceability.use_cases_not_covered        []
+PASS   traceability.stories_not_traced           []
+NOTE   traceability                              you are claiming full coverage in both directions — that is rare on a first pass, and it is checked
+FAIL   review_findings                           three or more required, found 0
+PASS   honesty.can_explain_everything_submitted  yes
+PASS   honesty.ai_usage_disclosed                yes
+------------------------------------------------------------------------
+14 PASS · 6 FAIL · 0 ERROR · 1 note
+Fix the FAIL and ERROR lines above, then run this again before you push.
 ```
 
 |  | PASS | FAIL | ERROR |
 | --- | --- | --- | --- |
-| `check_requirements.py` |  |  |  |
+| `check_requirements.py` | 22 | 1 | 0 |
+| `validate_submission.py` | 14 | 6 | 0 |
 
-Commit these numbers were produced at (`git rev-parse --short HEAD`):
+Commit these numbers were produced at (`git rev-parse --short HEAD`): f5693e8
 
-**Every FAIL, one line each: what it is and what you decided to do about it.** A FAIL you report and
+### Every FAIL
 
-explain costs you nothing.
-
-**Did you run the checks by hand instead of with Python?** Say so here — it costs nothing, but it
-
-has to be said.
+- **US-1:**`user-stories.md` has 2 TODO placeholders left. **Decision:** remove the remaining TODO placeholders before the final submission.
+- **student.name:** The student name is empty in `submission.yml`. **Decision:** fill in my name before the final submission.
+- **checker.pass:** The checker result was not recorded. **Decision:** fill in `22` after running the checker.
+- **checker.fail:** The checker result was not recorded. **Decision:** fill in `1` after running the checker.
+- **checker.error:** The checker error count was not recorded. **Decision:** fill in `0` after running the checker.
+- **checker.commit:** The commit hash was not recorded. **Decision:** fill in `f5693e8`.
+- **review_findings:** Fewer than three review findings were recorded. **Decision:** add at least three findings from the requirements review.
+**Did you run the checks by hand instead of with Python?**  
+No. I ran both checks with Python using `check_requirements.py` and `validate_submission.py`.
 
 ---
 
@@ -199,11 +256,13 @@ has to be said.
 
 Answer all three:
 
-1. Which part of the generated requirements was most wrong, and how would you have caught it without  
+1. Which part of the generated requirements was most wrong, and how would you have caught it without
+a checker?  
 
-a checker?
-2. What did the assistant get right that would have taken you noticeably longer by hand?
-3. You are handing these requirements to someone who will implement them, and you will not be in the
+2. What did the assistant get right that would have taken you noticeably longer by hand?  
+
+3. You are handing these requirements to someone who will implement them, and you will not be in the  
+
 room. Which single one would you rewrite first, and why?
 
 Be specific. "The AI was useful" is worth nothing; "UC-06 had no story behind it until I wrote
