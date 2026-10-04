@@ -17,12 +17,11 @@ rectangle "Smart Campus Study Room Booking System" {
 Student --> UC01
 Student --> UC02
 Student --> UC03
-Student --> UC06
 
 Administrator --> UC04
 Administrator --> UC05
 
-' why: R4 - a booking confirmation is required after a successful room booking
+' why: R4 - a successful booking always produces a confirmation, so the confirmation is part of booking, not a separate actor goal
 UC02 ..> UC06 : <<include>>
 
 @enduml

@@ -1,11 +1,8 @@
-```plantuml
 @startuml
 title Smart Campus - Domain Class Diagram
 
 class Student {
     - studentId: String
-    - name: String
-    - email: String
     --
     + bookRoom(room: Room, startTime: DateTime, endTime: DateTime): Booking
     + cancelBooking(booking: Booking): void
@@ -13,8 +10,6 @@ class Student {
 
 class Room {
     - roomId: String
-    - name: String
-    - capacity: Integer
     - isBlocked: Boolean
     --
     + isAvailable(startTime: DateTime, endTime: DateTime): Boolean
@@ -38,14 +33,12 @@ enum BookingStatus {
 }
 
 Student "1" -- "0..*" Booking : makes
-Room "1" -- "0..*" Booking : has
+Room "1" -- "0..*" Booking : is reserved by
 
 note right of Booking
-R2:
-A booking connects exactly one
-student with exactly one room
-for a specified time interval.
+R2: active bookings (status = ACTIVE)
+for the same room must not overlap in time.
+Multiplicities cannot express this rule.
 end note
 
 @enduml
-```
