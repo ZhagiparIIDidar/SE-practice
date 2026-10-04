@@ -1,0 +1,3 @@
+@startuml name
+Alice -> Bob : hi
+@enduml
