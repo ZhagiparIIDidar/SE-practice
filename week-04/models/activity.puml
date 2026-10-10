@@ -1,0 +1,33 @@
+@startuml
+title Book Room - Activity Diagram
+
+start
+
+:Select room and booking time;
+
+if (Time is in future, duration > 0 and <= 2 hours? (R1)) then ([yes])
+
+    if (Room blocked? (R3)) then ([no])
+
+        :Check active bookings for the selected room;
+
+        if (Overlap with an active booking for the selected room? (R2)) then ([no])
+            :Create booking;
+            :Show booking confirmation (R4);
+            stop
+        else ([yes])
+            :Reject booking - R2 overlap;
+            stop
+        endif
+
+    else ([yes])
+        :Reject booking - R3 room is blocked;
+        stop
+    endif
+
+else ([no])
+    :Reject booking - R1 invalid time range;
+    stop
+endif
+
+@enduml

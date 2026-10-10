@@ -1,0 +1,38 @@
+@startuml
+left to right direction
+
+actor Student
+actor Administrator
+
+rectangle "Smart Campus Study Room Booking System" {
+
+    usecase "UC-01\nView Room Availability" as UC01
+    usecase "UC-02\nBook Study Room" as UC02
+    usecase "UC-03\nCancel Booking" as UC03
+
+    usecase "UC-04\nBlock / Unblock Room" as UC04
+    usecase "UC-05\nReview Room Usage" as UC05
+    usecase "UC-06\nSend Booking Confirmation" as UC06
+}
+
+Student --> UC01
+Student --> UC02
+Student --> UC03
+
+Administrator --> UC04
+Administrator --> UC05
+Administrator --> UC06
+
+note bottom of UC01
+Assumptions:
+- A blocked room is not available for booking.
+- A booking lasts exactly 2 hours.
+- Bookings that only touch at the
+  end/start time do not overlap.
+- Student and Administrator are
+  the only actors in the approved scenario.
+- UC-01 to UC-06 are independent goals;
+  no <<include>> or <<extend>> is required.
+end note
+
+@enduml
