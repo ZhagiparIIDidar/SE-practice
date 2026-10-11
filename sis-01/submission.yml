@@ -16,7 +16,7 @@ assignment: "sis-01"            # do not edit
 student:
   name: Жағыпар Дидар Қанатұлы                        # as in the university register
   student_id: 24B031027                  # e.g. 24B031016
-  group:  CSCI2208                       # your group code, as in the timetable
+  group:  CSCI-2208                       # your group code, as in the timetable
   github:  ZhagiparIIDidar                     # username only, not a URL
 
 topic: 1.1                         # one of 1.1 … 1.10 — the same as the **Topic:** line in report.md
