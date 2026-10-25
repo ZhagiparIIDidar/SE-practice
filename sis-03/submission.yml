@@ -1,0 +1,61 @@
+# SIS #03 — the declaration. FACTS ONLY: every explanation stays in report.md.
+#
+# Fill this in LAST, after your final run of the checker, then validate it:
+#     python tests/check_sis.py
+#     python tests/validate_submission.py
+#
+# Your checker numbers are re-run by the instructor at the head of your pull request.
+# Numbers that do not match what that commit produces cost the whole workflow criterion.
+# A FAIL you report honestly — here and under known_fails — costs nothing extra.
+#
+# Format rules: two spaces for indentation, never tabs. Leave the keys exactly as they are.
+
+schema: 1
+assignment: "sis-03"            # do not edit
+
+student:
+  name: Жағыпар Дидар Қанатұлы
+  student_id: 24B031027
+  group: CSCI2208
+  github: ZhagiparIIDidar
+
+assistant:
+  tool: Claude.ai
+  model: Claude Sonnet 5.5
+
+bolt:
+  model: GLM 5.3 Flash
+  project_url: https://bolt.new/p/72128193
+
+language:
+  name: python
+  path: A
+
+reuse:
+  python_v1: week-05
+  web_v1: week-06
+
+checker:
+  pass: 52          # или 51, если W3 остался
+  fail: 3           # или 4
+  error: 0
+  commit: b5366a5
+
+counts:
+  tests: 21
+  exchanges: 9                  # B1-B9 in report.md section 11
+  issues: 7                     # rows in section 7
+  critique_decisions: 3         # rows in section 8
+  reflection_words: 136         # "section 10: N words" from the checker
+
+cases:
+  python_final_matches: 11
+  page_final_matches: 0         # Page final column left empty (see report.md section 13)
+
+known_fails: [C1, C4, X2]       # compare with D16 after the run; add W3 etc. if they are still red
+
+honesty:
+  v1_unedited: yes                   # если code/original/ и web/original/ не трогал
+  screenshots_unedited: yes          # если картинки в evidence/ без правок
+  results_observed: ...              # yes или no, как ты решишь по §5
+  ai_usage_disclosed: yes
