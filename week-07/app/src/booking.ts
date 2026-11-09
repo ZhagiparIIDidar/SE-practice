@@ -23,3 +23,13 @@ export function canBook({ start, end, now, blocked, bookings }: CanBookInput): b
     if (blocked) return false;                                  // AC3
     return !bookings.some((b) => start < b.end && b.start < end); // AC4
 }
+
+const res = canBook({
+    start: 660,
+    end: 720,
+    now: 540,
+    blocked: false,
+    bookings: [{ start: 700, end: 650 }],
+});
+console.log(res);
+
