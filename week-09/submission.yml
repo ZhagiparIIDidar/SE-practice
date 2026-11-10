@@ -1,0 +1,35 @@
+schema: 1
+week: "09"
+
+student:
+  name: Жағыпар Дидар Қанатұлы
+  student_id: 24B031027
+  github: ZhagiparIIDidar
+
+assistant:
+  tool: Gemini
+  model: Gemini 3.8 Flash
+  fresh_chats: yes
+
+calls:
+  r3: asked
+  first_run_s_fails: 9
+
+checker:
+  pass: 30
+  fail: 0
+  error: 0
+  commit: 6a7d9aa
+  known_fails: []
+
+review_findings:
+  - "S05 / additionalProperties: The initial schema lacked additionalProperties: false, permitting unexpected parameters like room: 204 to pass."
+  - "R3 / function calling: The model avoided inventing missing time arguments for 'tomorrow afternoon' and adhered to the prompt by asking a clarifying question."
+  - "AC1 vs AC4: The schema enforces individual boundary values (0 to 1440) for start and end, but relational constraints like start < end and AC4 overlap detection remain  exclusive to canBook."
+  - "A8 / security permissions: Blocking action A8 prevents an agent from transmitting sensitive environment variables and credentials from .env to external unverified MCP  servers."
+
+honesty:
+  definition_written_by_me: yes
+  calls_unedited: yes
+  outputs_unedited: yes
+  ai_usage_disclosed: yes
