@@ -13,13 +13,13 @@ schema: 1
 week: "08"
 
 student:
-  name: Khudaibergen Yerassyl
-  student_id:  24B032101        # as in KBTU records, e.g. 00X000000
-  github:         Yerassy11     # your GitHub username, the one that owns the repo
+  name: Жағыпар Дидар Қанатұлы
+  student_id: 24B031027         # as in KBTU records, e.g. 00X000000
+  github: ZhagiparIIDidar             # your GitHub username, the one that owns the repo
 
 assistant:
-  tool:                ChatGPT   # the assistant you debugged with: ChatGPT, Claude, Claude Code, ...
-  model:               Astra-6 # the exact model with its version, or: not displayed
+  tool: Claude         # the assistant that generated the tests: Bolt.new, ChatGPT, Claude, Copilot, ...
+  model: Claude Sonnet 5.5   # the exact model with its version, or: not displayed
 
 skill:
   environment:         chatgpt # chatgpt | claude-web | claude-code | prompt-only
@@ -30,16 +30,12 @@ project:
   vitest:              3.2.4 # the Vitest version from the "RUN  v..." line, e.g. 3.2.4
 
 counts:
-  tests_final:   23      # tests in your final suite (app/.../booking.test.*)
-  buggy_failed:     4   # failed tests when your Week 07 suite ran on the provided canBook (lab-report.md 2.2)
-  defects_logged: 2     # rows in lab-report.md section 3
-  lines_changed:   2    # lines of the canBook body you changed to fix both bugs (the checker prints it under B3)
+  tests_final:   23      # test (app/.../booking.test.*)
+  buggy_failed:     4   #  your Week 07 suite ran on the provided canBook (lab-report.md 2.2)
+  defects_logged: 2     #  section 3
+  lines_changed:   2    #  body you changed to fix both bugs (the checker prints it under B3)
 
 checker:
-  # Numbers from YOUR last run of: python tests/check_debugging.py
-  # They must add up to the number of checks it runs (31).
-  # Report them as they came out.
-  # A FAIL you report and explain in lab-report.md costs you nothing. A hidden one costs the criterion.
   pass: 31
   fail: 0 
   error: 0
@@ -48,8 +44,7 @@ checker:
   known_fails: []      # every check ID that is still FAIL or ERROR, explained in lab-report.md §9.1, e.g. [E1]
 
 verdict:
-  # Your judgement from lab-report.md section 7, against the actual code - not a guess.
-  skill_helped:        yes # yes | no | no-difference
+  skill_helped:        no # yes | no | no-difference
 
 review_findings:
   - "BUG-A / AC4: The original overlap condition rejected bookings that only touched at endpoints. The regression test detected this defect, and strict comparisons fixed it."
