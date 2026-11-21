@@ -148,7 +148,7 @@ rabbitmq-data/
 
 # ActiveMQ
 activemq-data/
-
+AGENT.md
 # SageMath parsed files
 *.sage.py
 
