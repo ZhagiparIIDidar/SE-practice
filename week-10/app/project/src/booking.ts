@@ -12,14 +12,15 @@ type BookingIssue =
   | { kind: "interval" | "past" | "duration" | "blocked" }
   | { kind: "overlap"; conflict: Booking };
 
-// Shared by the boolean API and the UI's detailed error messages.
-// These checks retain the Week 06 order and conditions.
+// Shared pure availability validation implementing AC1–AC5.
 export function getBookingIssue({
   start, end, now, blocked, bookings,
 }: BookingInput): BookingIssue | null {
   if (
     !Number.isFinite(start) ||
     !Number.isFinite(end) ||
+    !Number.isInteger(start) ||
+    !Number.isInteger(end) ||
     !(start >= 0 && end <= 1440 && start < end)
   ) {
     return { kind: "interval" };
@@ -38,15 +39,7 @@ export function canBook({ start, end, now, blocked, bookings }: {
   end: number;
   now: number;
   blocked: boolean;
-  bookings: { start: number; end: number }[];
+  bookings: readonly Booking[];
 }): boolean {
-  if (!(0 <= start && start < end && end <= 1440)) return false;
-  if (!(start > now)) return false;
-  if (end - start > 120) return false;
-  if (blocked) return false;
-  for (const b of bookings) {
-    if (start < b.end && end > b.start) return false;
-  }
-  // keep the room's list current with the slot that was just found free
-  return true;
+  return getBookingIssue({ start, end, now, blocked, bookings }) === null;
 }
