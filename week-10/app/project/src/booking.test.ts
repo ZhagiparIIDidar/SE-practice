@@ -318,3 +318,26 @@ describe("canBook — AC5: Boolean result and no input mutation", () => {
     expect(bookings).toEqual(before);
   });
 });
+
+it("R3 AC1: rejects fractional minutes for start or end time", () => {
+  const bookings: Booking[] = [];
+  expect(
+    canBook({
+      start: 600.5,
+      end: 660,
+      now: 540,
+      blocked: false,
+      bookings,
+    }),
+  ).toBe(false);
+  expect(
+    canBook({
+      start: 600,
+      end: 660.25,
+      now: 540,
+      blocked: false,
+      bookings,
+    }),
+  ).toBe(false);
+});
+
