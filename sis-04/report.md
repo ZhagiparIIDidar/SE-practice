@@ -17,7 +17,7 @@
 | Assistant (tool) | Antigravity CLI |
 | Assistant model | Gemini 4 Hydrogen (High) |
 | Starting point | week-08 |
-| Baseline commit | (write here) |
+| Baseline commit | `10ec6a3` |
 | Language (ts or js) | ts |
 | Vitest version | 3.2.4 |
 | Where I ran the tests | Local Windows PowerShell (sis-04/app) |
@@ -47,7 +47,23 @@
      they do. A tree is fine:  src/App.tsx — the page, holds the rooms and the form … -->
 
 ```text
-(paste here)
+sis-04/app/
+  package.json                        — Vitest test runner manifest (vitest ^3.2.4)
+  project/package.json                — Vite + React + TypeScript manifest (has syntax error in dependencies)
+  project/index.html                  — HTML shell for the Vite app
+  project/src/main.tsx                — React entrypoint mounting App
+  project/src/App.tsx                 — Main page state, calls canBook() and checkAvailability(), renders panels
+  project/src/booking.ts              — canBook() and getBookingIssue() implementing AC1-AC5
+  project/src/booking.test.ts         — 23 Vitest unit tests covering BUG-A, BUG-B, and AC1-AC5
+  project/src/types.ts                — TypeScript interfaces (Booking, Room, Decision, CheckInput, CheckResult)
+  project/src/data/rooms.ts           — SAMPLE_ROOMS (8 fictional rooms, missing equipment field)
+  project/src/lib/checkAvailability.ts — Maps getBookingIssue() into UI Decision + reason text
+  project/src/lib/time.ts             — fmtTime(), parseTime(), nowHHMM() helpers
+  project/src/components/RoomSelector.tsx — Room dropdown selector
+  project/src/components/BookingForm.tsx  — Time inputs and Check/Reset buttons
+  project/src/components/RoomTimeline.tsx — 24h visual bar of bookings and candidate interval
+  project/src/components/DecisionPanel.tsx — Displays Available / Unavailable / Invalid decision and reason
+  project/src/index.css               — Layout and responsive styles
 ```
 
 ### 2.2 The context message as sent
@@ -56,7 +72,34 @@
      (no login, payments, live APIs or database; fictional data only). Unedited. -->
 
 ```text
-(paste here)
+I am extending our Smart Campus Room Availability Checker (starting from week-08 in sis-04/app/).
+Here is the repository map of the starting code:
+- sis-04/app/package.json: Vitest runner; sis-04/app/project/package.json: React + Vite + TS app
+- project/src/App.tsx: page state and submit handler calling canBook() and checkAvailability()
+- project/src/booking.ts: canBook() and getBookingIssue() for AC1-AC5
+- project/src/booking.test.ts: 23 existing Vitest tests (AC1-AC5, BUG-A, BUG-B)
+- project/src/types.ts & project/src/data/rooms.ts: Room type and SAMPLE_ROOMS (8 rooms, no equipment field)
+- project/src/lib/checkAvailability.ts & project/src/lib/time.ts: detailed messages and HH:MM helpers
+- project/src/components/: RoomSelector, BookingForm, RoomTimeline, DecisionPanel
+
+Requirements to preserve (AC1-AC6):
+- AC1: Reject start >= end and requests in the past.
+- AC2: Enforce maximum allowed duration (120 minutes).
+- AC3: Reject a blocked room.
+- AC4: Reject overlaps; allow bookings that only touch at endpoints.
+- AC5: Return Available / Unavailable without changing booking data.
+- AC6: Clear, responsive feedback on desktop and mobile.
+
+New requirements (F1-F5) and module contract:
+- At least 4 fictional rooms in src/rooms.ts (Room type + ROOMS with id, name, capacity, equipment, blocked, bookings).
+- F1: Capacity filter (room.capacity >= requested attendees) in src/filter.ts filterRooms().
+- F2: Equipment filter (room contains ALL selected required items) in filterRooms().
+- F3: A blocked room cannot be reported as available (checkRoom() in src/booking.ts calling canBook()).
+- F4: Show a clear empty state when no rooms match.
+- F5: Changing the selected room must refresh the availability result appropriately.
+
+Constraints: fictional data only, fixed current time input, no login, no payments, no live APIs, no browser storage, no database.
+Please identify maintainability risks with exact file/function references and propose a small step-by-step improvement plan without a full rewrite or code yet.
 ```
 
 ## 3. Codebase analysis (Task 1)
@@ -69,24 +112,28 @@
 
 | # | Risk | Where (file / function) | Evidence | Priority |
 | --- | --- | --- | --- | --- |
-| 1 | (write here) | (write here) | (write here) | High / Medium / Low |
-| 2 | (write here) | (write here) | (write here) | High / Medium / Low |
-| 3 | (write here) | (write here) | (write here) | High / Medium / Low |
+| 1 | Duplicated rule evaluation and double check on submit | `project/src/booking.ts` (`canBook()`, `getBookingIssue()`) and `project/src/App.tsx` (`handleSubmit()`) | `canBook` and `getBookingIssue` both implement the same five AC1-AC5 checks independently, and `handleSubmit()` calls both `canBook()` and `checkAvailability()` then merges their results; `canBook` also retains a misleading comment (`// keep the room's list current...`). | High |
+| 2 | Split manifests, broken JSON in `project/package.json`, and nested `project/` root | `sis-04/app/package.json` and `sis-04/app/project/package.json` | `app/package.json` only declares `vitest`, while the React/Vite app lives in `app/project/` whose `package.json` lines 12-13 miss a comma after `"react-dom": "^18.3.1"` and have a trailing comma on line 13, breaking `npm install`/`vite` inside `app/project/`; `.gitignore` also ignores `booking.ts`. | High |
+| 3 | Missing `equipment` field, missing `filterRooms` / `checkRoom`, and silent fallback to room 0 | `project/src/types.ts`, `project/src/data/rooms.ts`, `project/src/App.tsx` | `Room` and `SAMPLE_ROOMS` have no `equipment: string[]` property for F2; `App.tsx` line 21 falls back to `SAMPLE_ROOMS[0]` when `selectedId` is missing, which would silently check the wrong room when filters yield no match (F4). | High |
+| 4 | Stale generated build files and stray template markup | `project/vite.config.js`, `project/*.tsbuildinfo`, `project/index.html` | Compiled JS/d.ts artifacts (`vite.config.js`, `vite.config.d.ts`, `tsconfig*.tsbuildinfo`) are tracked alongside `.ts` sources, and `index.html` contains empty `<div>` wrappers and external `bolt.new` OpenGraph meta tags. | Low |
 
 ### 3.2 Improvement plan — before editing
 
 <!-- Numbered, in the order you will do it, smallest safe step first. Written BEFORE you change
      code: the commit that adds this section comes before the commit that changes app/src. -->
 
-1. (write here)
-2. (write here)
-3. (write here)
+1. Consolidate the Vite + Vitest project into `sis-04/app/` (`package.json`, `tsconfig.json`, `vite.config.ts`, `index.html`, `src/`), fix the invalid JSON comma in `dependencies`, remove stale build artifacts (`vite.config.js`, `vite.config.d.ts`, `*.tsbuildinfo`), and verify the baseline 23 Vitest tests and Vite build pass.
+2. Move and extend the room catalog into `src/rooms.ts` exporting `Room` and `ROOMS` (8 fictional rooms with `id`, `name`, `capacity`, `equipment`, `blocked`, `bookings`, plus display metadata), and align `src/types.ts` without breaking existing tests.
+3. Write unit tests first for `F1`, `F2`, `B5`, and `B6`, then implement `filterRooms(rooms, { attendees, equipment })` in `src/filter.ts` so capacity uses `>=` and equipment checks all selected items (`every`).
+4. Write unit tests first for `F3`, `F5`, `B1–B4`, and `INT`, then add `checkRoom(rooms, roomId, request)` in `src/booking.ts` (reusing `canBook`) and unify `canBook` / `getBookingIssue` so rule checks live in one place while preserving AC1–AC5.
+5. Add capacity and equipment filter controls, empty-state UI (`F4`), and immediate availability refresh / cleared stale state when changing rooms (`F5`) in `src/App.tsx` and components, keeping all rules imported from `rooms.ts`, `filter.ts`, and `booking.ts` and preserving mobile responsiveness (`AC6`).
+6. Write `app/README.md`, create `diagrams/before.puml` and `diagrams/after.puml`, capture the five screenshots in `evidence/`, and complete `report.md` §4–§10 and `AI_USAGE.md`.
 
 ### 3.3 One AI suggestion I rejected or modified
 
 | Suggestion (as the assistant made it) | Decision | Why — with the AC, F-rule, test or file behind it |
 | --- | --- | --- |
-| (write here) | Rejected / Modified | (write here) |
+| Exclude `blocked === true` rooms inside `filterRooms()` in `src/filter.ts` so blocked rooms never appear in the room selector. | Modified | `F1` and `F2` define `filterRooms()` by capacity and equipment only, while `F3` and `AC3` require `checkRoom()` in `src/booking.ts` (via `canBook()`) to report blocked rooms as unavailable. Keeping blocked rooms visible with a `(Blocked)` tag preserves `F3` testing on `checkRoom()`. |
 
 ## 4. Feature extension (Task 2)
 
