@@ -1,0 +1,45 @@
+@startuml
+title Smart Campus Room Availability Checker — Before (Baseline week-08)
+
+skinparam componentStyle rectangle
+
+component "src/main.tsx" as Main
+component "src/App.tsx" as App
+component "src/data/rooms.ts\n(SAMPLE_ROOMS, no equipment)" as RoomsData
+component "src/booking.ts\n(canBook + getBookingIssue)" as Booking
+component "src/lib/checkAvailability.ts\n(checkAvailability)" as CheckAvail
+component "src/lib/time.ts\n(fmtTime, parseTime, nowHHMM)" as Time
+component "src/types.ts" as Types
+component "src/components/RoomSelector.tsx" as RoomSelector
+component "src/components/BookingForm.tsx" as BookingForm
+component "src/components/RoomTimeline.tsx" as RoomTimeline
+component "src/components/DecisionPanel.tsx" as DecisionPanel
+component "src/booking.test.ts" as Tests
+
+Main --> App
+App --> RoomsData : SAMPLE_ROOMS
+App --> Booking : canBook()
+App --> CheckAvail : checkAvailability()
+App --> Time : fmtTime, parseTime, nowHHMM
+App --> Types
+App --> RoomSelector
+App --> BookingForm
+App --> RoomTimeline
+App --> DecisionPanel
+
+RoomsData --> Types
+CheckAvail --> Booking : getBookingIssue()
+CheckAvail --> Time : fmtTime()
+CheckAvail --> Types
+RoomSelector --> Types
+DecisionPanel --> Types
+RoomTimeline --> Types
+RoomTimeline --> Time : fmtTime()
+Tests --> Booking : canBook()
+
+note right of App
+  App calls both canBook() and checkAvailability()
+  and falls back to SAMPLE_ROOMS[0] when ID is missing.
+  No filter module or checkRoom() exists yet.
+end note
+@enduml
