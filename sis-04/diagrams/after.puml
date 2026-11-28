@@ -1,5 +1,65 @@
-' diagrams/after.puml — the same view of your FINAL code. It must show rooms, booking, filter
-' and the UI (App and any components), with an arrow for each import. Replace this stub.
-'
 @startuml
+title Smart Campus Room Availability Checker — After (Refactored SIS #04)
+
+skinparam componentStyle rectangle
+
+package "Domain & Data Modules" {
+  component "src/rooms.ts\n(Room, Booking, EQUIPMENT_OPTIONS, ROOMS)" as Rooms
+  component "src/filter.ts\n(filterRooms)" as Filter
+  component "src/booking.ts\n(canBook, getBookingIssue, checkRoom)" as Booking
+}
+
+package "UI & Formatting" {
+  component "src/main.tsx" as Main
+  component "src/App.tsx" as App
+  component "src/types.ts" as Types
+  component "src/lib/checkAvailability.ts\n(checkAvailability)" as CheckAvail
+  component "src/lib/time.ts\n(fmtTime, parseTime, nowHHMM)" as Time
+  component "src/components/FilterBar.tsx" as FilterBar
+  component "src/components/RoomSelector.tsx" as RoomSelector
+  component "src/components/BookingForm.tsx" as BookingForm
+  component "src/components/RoomTimeline.tsx" as RoomTimeline
+  component "src/components/DecisionPanel.tsx" as DecisionPanel
+}
+
+package "Tests" {
+  component "src/booking.test.ts" as BookingTests
+  component "src/catalog.test.ts" as CatalogTests
+}
+
+Filter --> Rooms : Room type
+Booking --> Rooms : Room, Booking types
+Types --> Rooms : re-exports Room, Booking
+
+Main --> App
+App --> Rooms : ROOMS
+App --> Filter : filterRooms()
+App --> CheckAvail : checkAvailability()
+App --> Time : fmtTime, parseTime, nowHHMM
+App --> Types
+App --> FilterBar
+App --> RoomSelector
+App --> BookingForm
+App --> RoomTimeline
+App --> DecisionPanel
+
+FilterBar --> Rooms : EQUIPMENT_OPTIONS
+CheckAvail --> Booking : checkRoom(), getBookingIssue()
+CheckAvail --> Time : fmtTime()
+CheckAvail --> Types
+RoomSelector --> Types
+DecisionPanel --> Types
+RoomTimeline --> Types
+RoomTimeline --> Time : fmtTime()
+
+BookingTests --> Booking : canBook()
+CatalogTests --> Booking : checkRoom()
+CatalogTests --> Filter : filterRooms()
+CatalogTests --> Rooms : Room type
+
+note right of Booking
+  checkRoom(rooms, roomId, request)
+  delegates to canBook().
+  getBookingIssue() also gates on canBook().
+end note
 @enduml

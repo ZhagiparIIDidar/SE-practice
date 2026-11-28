@@ -1,13 +1,47 @@
-import type { CheckInput, CheckResult } from "../types";
-import { getBookingIssue } from "../booking";
+import type { CheckResult, Room } from "../types";
+import { checkRoom, getBookingIssue } from "../booking";
 import { fmtTime } from "./time";
 
+export type RoomCheckParams = {
+  rooms: readonly Room[];
+  roomId: string;
+  currentTimeMin: number;
+  startMin: number;
+  endMin: number;
+};
+
 /**
- * Pure availability check implementing AC1–AC5.
- * Never mutates the room's bookings (AC5).
+ * UI-facing availability check delegating the boolean decision to checkRoom (F3, F5, AC1-AC5)
+ * and formatting a human-readable explanation when rejected. Never mutates room data (AC5).
  */
-export function checkAvailability(input: CheckInput): CheckResult {
-  const { room, currentTimeMin, startMin, endMin } = input;
+export function checkAvailability({
+  rooms,
+  roomId,
+  currentTimeMin,
+  startMin,
+  endMin,
+}: RoomCheckParams): CheckResult {
+  const room = rooms.find((r) => r.id === roomId);
+  if (!room) {
+    return {
+      decision: "unavailable",
+      reason: "No matching room is selected.",
+    };
+  }
+
+  if (
+    checkRoom(rooms, roomId, {
+      start: startMin,
+      end: endMin,
+      now: currentTimeMin,
+    })
+  ) {
+    return {
+      decision: "available",
+      reason: `Interval ${fmtTime(startMin)}–${fmtTime(endMin)} is available (${endMin - startMin} min).`,
+    };
+  }
+
   const issue = getBookingIssue({
     start: startMin,
     end: endMin,
@@ -16,7 +50,6 @@ export function checkAvailability(input: CheckInput): CheckResult {
     bookings: room.bookings,
   });
 
-  // Keep the original UI messages; booking.ts owns the decision rules.
   if (issue?.kind === "interval") {
     return {
       decision: "invalid",
@@ -30,23 +63,18 @@ export function checkAvailability(input: CheckInput): CheckResult {
       reason: `Start time must be after the current time (${fmtTime(currentTimeMin)}).`,
     };
   }
-
-  // AC2: reject bookings longer than 120 minutes.
   if (issue?.kind === "duration") {
     return {
       decision: "unavailable",
       reason: `Requested length is ${endMin - startMin} min, but the maximum is 120 min.`,
     };
   }
-
-  // AC3: reject when the room is blocked.
   if (issue?.kind === "blocked") {
     return {
       decision: "unavailable",
       reason: "This room is blocked and cannot be booked.",
     };
   }
-
   if (issue?.kind === "overlap") {
     const { conflict } = issue;
     return {
@@ -57,7 +85,7 @@ export function checkAvailability(input: CheckInput): CheckResult {
   }
 
   return {
-    decision: "available",
-    reason: `Interval ${fmtTime(startMin)}–${fmtTime(endMin)} is available (${endMin - startMin} min).`,
+    decision: "unavailable",
+    reason: "This room is unavailable for the requested interval.",
   };
 }

@@ -1,19 +1,6 @@
-export interface Booking {
-  start: number; // minutes from midnight, [0, 1440)
-  end: number; // minutes from midnight, (0, 1440]
-  label?: string;
-}
+import type { Booking, Room } from "./rooms";
 
-export interface Room {
-  id: string;
-  name: string;
-  building: string;
-  floor: number;
-  capacity: number;
-  type: string;
-  blocked: boolean;
-  bookings: Booking[];
-}
+export type { Booking, Room };
 
 export type Decision = "available" | "unavailable" | "invalid";
 
